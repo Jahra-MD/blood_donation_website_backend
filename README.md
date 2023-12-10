@@ -7,3 +7,8 @@ Installation steps
 For migrations
 1. for creating the migrations use the command "npm typeorm migration: create"
 2. for running the migration use the command "npm typeorm migrate:run
+
+For detailed project execution
+       - https://drive.google.com/file/d/1Awxze9DItgYaBd_iwewsH917CJUqAunQ/view?usp=sharing
+       
+    
