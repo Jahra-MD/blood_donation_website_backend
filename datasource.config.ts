@@ -6,10 +6,13 @@ const datasource = new DataSource({
     port: 4306,
     username: "root",
     password: "",
-    database: "bloodBank",
-    entities: ['dist/src/donors/entities/donor.entity.ts'],
+    database: "People",
+    entities: ["dist/**/*.entity{ .ts,.js}"],
+migrations: ["dist/src/migration/*{.ts,.js}"],
     synchronize: false,
-    migrations: ['1702129540375-xyz.ts'],
-    migrationsTableName: 'donor',
+    // migrations: ['1702129540375-xyz.ts'],
+    migrationsTableName: 'user',
+    logging:true,
+    migrationsRun : true
 });
 export default datasource

@@ -7,11 +7,11 @@ export const databaseConfig: TypeOrmModuleOptions = {
     port: 4306,
     username: "root",
     password: "",
-    database: "bloodBank",
+    database: "People",
     entities: [Donor],
     synchronize: false,
     autoLoadEntities: true,
     migrations: ['dist/src/donors/entities/donor.entity.ts'],
-    migrationsTableName: 'donor',
+    migrationsTableName: 'donor1',
     migrationsRun: true,
 };

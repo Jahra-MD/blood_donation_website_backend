@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete} from '@nestjs/common';
 import { DonorsService } from './donors.service';
 import { CreateDonorDto } from './dto/create-donor.dto';
-
 @Controller('donors')
 export class DonorsController {
   constructor(private readonly donorsService: DonorsService) {}
@@ -12,21 +11,23 @@ export class DonorsController {
   
   @Post('register')
   async register(@Body() user: CreateDonorDto) {
-    console.log(user, 'body from frontend')
-    return this.donorsService.create(user);
+    const person = await this.donorsService.findByUsername(user.username)
+    if (person == null) {
+      return this.donorsService.create(user);
+    } else {
+      return null
+    }
   }
 
   @Post('login')
- async login(@Body() credentials: { username: string; password: string }){
-    const { username, password } = credentials;
+ async logindata(@Body() data: any){
+    const decryptData = this.donorsService.decrypt(data);
+    console.log(decryptData, 'decryptDataaaaaaa')
+    const { username, password } =  decryptData
     const user = await this.donorsService.findByUsername(username)
-    console.log(user, 'user found in db');
-    
-    if (user && user.password === password) {
-      console.log(user, 'user logged in ')
+    if (user && user.password == password) {
       return user;
     } else {
-      console.log('login failed')
       return null
     }
   }

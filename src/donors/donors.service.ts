@@ -3,7 +3,7 @@ import { CreateDonorDto } from './dto/create-donor.dto';
 import { Repository } from 'typeorm';
 import { Donor } from './entities/donor.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import * as crypto from 'crypto';
+import { AES, enc } from 'crypto-js';
 
 @Injectable()
 export class DonorsService {
@@ -23,13 +23,11 @@ export class DonorsService {
   
   decrypt(data)
   {
-    const secretKey = 'qwert1234!@#$%'
-    const algorithm = 'aes-256-cbc';
-
-      const decipher = crypto.createDecipheriv(algorithm, Buffer.from(secretKey), Buffer.from('16BYTES_LONG_IV'));
-      let decryptedData = decipher.update(data, 'hex', 'utf-8');
-      decryptedData += decipher.final('utf-8');
-      console.log('Decrypted Data:', decryptedData);
+    const encryptedData = data.body;
+    const secretKey = 'asdfqwer1234!@#$';
+    const decryptedData = AES.decrypt(encryptedData, secretKey).toString(enc.Utf8);
+    console.log('Decrypted Data:', decryptedData);
+    return JSON.parse(decryptedData);
   }
 
 
@@ -45,11 +43,4 @@ export class DonorsService {
     return this.donorRepository.findOneBy({username})
   }
 
-  // update(id: number, updateDonorDto: UpdateDonorDto) {
-  //   return this.donorRepository.update(id,updateDonorDto)
-  // }
-
-  // remove(id: number) {
-  //   return this.donorRepository.delete(id)
-  // }
 }
